@@ -12,29 +12,29 @@ struct ContentView: View {
     
     @State private var inputUnit = "Celsius"
     @State private var outputUnit = "Fahrenheit"
-    @State private var inputValue = 100
+    @State private var inputValue = Double(100)
     
-    var temperatureInCelsius: Int {
+    var temperatureInCelsius: Double {
         switch inputUnit {
         case "Celsius":
             return inputValue
         case "Fahrenheit":
-            return inputValue // todo
+            return (inputValue - 32) * 5 / 9
         case "Kelvin":
-            return inputValue // todo
+            return inputValue - 273.15
         default:
             return inputValue // todo
         }
     }
     
-    var temperatureInSelectedUnits: Int {
+    var temperatureInSelectedUnits: Double {
         switch outputUnit {
         case "Celsius":
             return temperatureInCelsius
         case "Fahrenheit":
-            return temperatureInCelsius // todo
+            return temperatureInCelsius * 9 / 5 + 32
         case "Kelvin":
-            return temperatureInCelsius // todo
+            return temperatureInCelsius + 273.15
         default:
             return temperatureInCelsius // todo
         }
