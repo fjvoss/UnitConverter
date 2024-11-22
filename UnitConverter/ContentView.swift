@@ -42,7 +42,12 @@ struct ContentView: View {
     
     var body: some View {
         Form {
-            Section("Input unit") {
+            Section("Temperature to convert") {
+                TextField("Amount", value: $inputValue, format: .number)
+                    .keyboardType(.decimalPad)
+            }
+            
+            Section("From") {
                 Picker("Input unit", selection: $inputUnit) {
                     ForEach(unitOptions, id: \.self) {
                         Text($0)
@@ -51,18 +56,13 @@ struct ContentView: View {
                 .pickerStyle(.segmented)
             }
             
-            Section("Output unit") {
+            Section("To") {
                 Picker("Output unit", selection: $outputUnit) {
                     ForEach(unitOptions, id: \.self) {
                         Text($0)
                     }
                 }
                 .pickerStyle(.segmented)
-            }
-            
-            Section("Value") {
-                TextField("Amount", value: $inputValue, format: .number)
-                    .keyboardType(.decimalPad)
             }
             
             Section("Result") {
