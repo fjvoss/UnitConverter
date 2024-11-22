@@ -7,36 +7,51 @@
 
 import SwiftUI
 
+enum TemperatureUnit: CaseIterable, Identifiable, CustomStringConvertible {
+    case celsius
+    case fahrenheit
+    case kelvin
+    
+    var id: Self { self }
+    
+    var description: String {
+        switch self {
+        case .celsius:
+            return "Celsius"
+        case .fahrenheit:
+            return "Fahrenheit"
+        case .kelvin:
+            return "Kelvin"
+        }
+    }
+}
+
 struct ContentView: View {
     let unitOptions = ["Celsius", "Fahrenheit", "Kelvin"]
     
-    @State private var inputUnit = "Celsius"
-    @State private var outputUnit = "Fahrenheit"
+    @State private var inputUnit = TemperatureUnit.celsius
+    @State private var outputUnit = TemperatureUnit.fahrenheit
     @State private var inputValue = Double(100)
     
     var temperatureInCelsius: Double {
         switch inputUnit {
-        case "Celsius":
+        case .celsius:
             return inputValue
-        case "Fahrenheit":
+        case .fahrenheit:
             return (inputValue - 32) * 5 / 9
-        case "Kelvin":
+        case .kelvin:
             return inputValue - 273.15
-        default:
-            return inputValue // todo
         }
     }
     
     var temperatureInSelectedUnits: Double {
         switch outputUnit {
-        case "Celsius":
+        case .celsius:
             return temperatureInCelsius
-        case "Fahrenheit":
+        case .fahrenheit:
             return temperatureInCelsius * 9 / 5 + 32
-        case "Kelvin":
+        case .kelvin:
             return temperatureInCelsius + 273.15
-        default:
-            return temperatureInCelsius // todo
         }
     }
     
@@ -49,8 +64,8 @@ struct ContentView: View {
             
             Section("From") {
                 Picker("Input unit", selection: $inputUnit) {
-                    ForEach(unitOptions, id: \.self) {
-                        Text($0)
+                    ForEach(TemperatureUnit.allCases) { option in
+                        Text(String(describing: option))
                     }
                 }
                 .pickerStyle(.segmented)
@@ -58,8 +73,8 @@ struct ContentView: View {
             
             Section("To") {
                 Picker("Output unit", selection: $outputUnit) {
-                    ForEach(unitOptions, id: \.self) {
-                        Text($0)
+                    ForEach(TemperatureUnit.allCases) { option in
+                        Text(String(describing: option))
                     }
                 }
                 .pickerStyle(.segmented)
